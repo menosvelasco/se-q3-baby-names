@@ -7,7 +7,7 @@
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
 
-__author__ = """ manuel Velasco, Piero"""
+__author__ = """ Manuel Velasco, Piero, John(SE Coach) """
 
 """
 Define the extract_names() function below and change main()
