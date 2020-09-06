@@ -7,6 +7,8 @@
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
 
+__author__ = """ Manuel Velasco, Piero, John(SE Coach) """
+
 """
 Define the extract_names() function below and change main()
 to call it.
@@ -44,8 +46,29 @@ def extract_names(filename):
     ['2006', 'Aaliyah 91', 'Aaron 57', 'Abagail 895', ...]
     """
     names = []
-    # +++your code here+++
+    content = str()
+    with open(filename) as f:
+        content = f.read()
+
+    match_obj = re.search(r'Popularity\sin\s(\d\d\d\d)', content)
+    year = match_obj.group(1)
+    names.append(year)
+
+    tuple_list = re.findall(
+        r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', content)
+    names_dict = {}
+    for rank, boy, girl in tuple_list:
+        if boy not in names_dict:
+            names_dict[boy] = rank
+        if girl not in names_dict:
+            names_dict[girl] = rank
+
+    for k in sorted(names_dict):
+        names.append(k+' '+names_dict[k])
     return names
+
+
+# extract_names('baby2006.html')
 
 
 def create_parser():
@@ -82,7 +105,15 @@ def main(args):
     # Use the create_summary flag to decide whether to print the list
     # or to write the list to a summary file (e.g. `baby1990.html.summary`).
 
-    # +++your code here+++
+    for item in file_list:
+        names = extract_names(item)
+        if not create_summary:
+            print(*names, sep='\n')
+        else:
+            summary_file = item + '.summary'
+            with open(summary_file, 'w') as f:
+                for name in names:
+                    f.write(name+'\n')
 
 
 if __name__ == '__main__':
